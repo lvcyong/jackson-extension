@@ -1,5 +1,6 @@
 package com.lvcoco.jackson.extension;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.TreeNode;
@@ -57,9 +58,16 @@ public class JacksonHelper {
                 .registerModule(getParameterNamesModule())
                 .enable(JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN)
                 .enable(SerializationFeature.WRITE_SELF_REFERENCES_AS_NULL)
+                // 禁用时间戳格式
                 .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
                 .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
         ;
+
+        // 配置对空值的处理
+        JSON_MAPPER.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+
+        // 配置是否缩进输出
+        JSON_MAPPER.configure(SerializationFeature.INDENT_OUTPUT, true);
 
         // 忽略未知的JSON字段
         JSON_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
