@@ -6,8 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * <pre>
@@ -49,12 +47,13 @@ class JacksonHelperTest {
 
     @Test
     public void test4() throws Exception {
-        Map<String, Object> map = new HashMap<>();
-        map.put("name", "lvcoco");
-        map.put("age", 18);
-        map.put("map", map);
-
-        JacksonHelper.writeValueAsPrettyString(map);
+        String s = """
+                {
+                    "a": 1,
+                    "b": 2
+                }
+                """;
+        System.err.println(JacksonHelper.isJson(s));
     }
 
 }
