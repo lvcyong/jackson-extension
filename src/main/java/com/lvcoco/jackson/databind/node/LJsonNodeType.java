@@ -92,7 +92,7 @@ public enum LJsonNodeType {
                 case BIG_DECIMAL -> {
                     return new LDecimalNode((DecimalNode) node);
                 }
-                case null, default -> throw new UnsupportedOperationException(node.getNodeType().name());
+                default -> throw new UnsupportedOperationException(node.getNodeType().name());
             }
 
         }
