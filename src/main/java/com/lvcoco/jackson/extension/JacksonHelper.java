@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.ser.std.NumberSerializer;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -53,9 +54,10 @@ public class JacksonHelper {
                 // .setTimeZone(TimeZone.getTimeZone("GMT+8"))
                 .setDateFormat(new SimpleDateFormat(DATE_TIME_FORMATTER))
                 .registerModule(new Jdk8Module())
+                .registerModule(new JavaTimeModule())
+                .registerModule(new ParameterNamesModule())
                 .registerModule(new VavrModule())
-                .registerModule(getJavaTimeModule())
-                .registerModule(getParameterNamesModule())
+                .registerModule(getSimpleModule())
                 .enable(JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN)
                 .enable(SerializationFeature.WRITE_SELF_REFERENCES_AS_NULL)
                 // 禁用时间戳格式
@@ -77,30 +79,27 @@ public class JacksonHelper {
 
     }
 
-    private static ParameterNamesModule getParameterNamesModule() {
-        ParameterNamesModule module = new ParameterNamesModule();
+    private static SimpleModule getSimpleModule() {
+        SimpleModule module = new SimpleModule();
+
         module.addSerializer(Long.class, ToStringSerializer.instance);
         module.addSerializer(long.class, ToStringSerializer.instance);
-        module.addSerializer(NumberSerializer.bigDecimalAsStringSerializer());
-        return module;
-    }
 
-    private static JavaTimeModule getJavaTimeModule() {
-        JavaTimeModule javaTimeModule = new JavaTimeModule();
+        module.addSerializer(NumberSerializer.bigDecimalAsStringSerializer());
 
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(DATE_FORMATTER);
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(TIME_FORMATTER);
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER);
 
-        javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(dateFormatter));
-        javaTimeModule.addSerializer(LocalTime.class, new LocalTimeSerializer(timeFormatter));
-        javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(dateTimeFormatter));
+        module.addSerializer(LocalDate.class, new LocalDateSerializer(dateFormatter));
+        module.addSerializer(LocalTime.class, new LocalTimeSerializer(timeFormatter));
+        module.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(dateTimeFormatter));
 
-        javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(dateFormatter));
-        javaTimeModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer(timeFormatter));
-        javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(dateTimeFormatter));
+        module.addDeserializer(LocalDate.class, new LocalDateDeserializer(dateFormatter));
+        module.addDeserializer(LocalTime.class, new LocalTimeDeserializer(timeFormatter));
+        module.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(dateTimeFormatter));
 
-        return javaTimeModule;
+        return module;
     }
 
     public static <T> T readValue(String json, Class<T> valueType) {
