@@ -56,6 +56,7 @@ public class JacksonHelper {
                 .registerModule(getJavaTimeModule())
                 .registerModule(getParameterNamesModule())
                 .enable(JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN)
+                .enable(SerializationFeature.WRITE_SELF_REFERENCES_AS_NULL)
                 .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
                 .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
         ;

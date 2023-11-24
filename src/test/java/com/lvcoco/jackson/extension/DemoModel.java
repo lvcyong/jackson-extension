@@ -26,6 +26,7 @@ import java.util.List;
 public class DemoModel {
     private int int1 = Integer.MIN_VALUE;
     private Integer int2 = Integer.MAX_VALUE;
+    private int int3;
 
     private byte byte1 = Byte.MIN_VALUE;
     private Byte byte2 = Byte.MAX_VALUE;
@@ -35,12 +36,16 @@ public class DemoModel {
 
     private long long1 = Long.MIN_VALUE;
     private Long long2 = Long.MAX_VALUE;
+    private long long3;
 
     private float float1 = Float.MIN_VALUE;
     private Float float2 = Float.MAX_VALUE;
+    private Float float3 = 12345678987654321.123456789F;
 
     private double double1 = Double.MIN_VALUE;
     private Double double2 = Double.MAX_VALUE;
+    private double double3;
+    private double double4 = 12345678987654321.123456789D;
 
     private char char1 = 'A';
     private Character char2 = 'Z';
@@ -148,7 +153,7 @@ public class DemoModel {
 
     private List<Timestamp> timestampList1 = List.of(timestamp1);
 
-    // private DemoModel demoModel = new DemoModel();
+    // private DemoModel demoModel;
 
     // private DemoModel[] demoModelArray1 = new DemoModel[] {demoModel};
     //
