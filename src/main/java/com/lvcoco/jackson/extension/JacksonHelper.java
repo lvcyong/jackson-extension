@@ -134,6 +134,10 @@ public class JacksonHelper {
         return treeNode == null ? null : wrap(() -> JSON_MAPPER.treeToValue(treeNode, valueType));
     }
 
+    public static <T> T treeToValue(TreeNode treeNode, TypeReference<T> toValueTypeRef) {
+        return treeNode == null ? null : wrap(() -> JSON_MAPPER.treeToValue(treeNode, toValueTypeRef));
+    }
+
     public static boolean isJson(String str) {
         try {
             JSON_MAPPER.readTree(str);

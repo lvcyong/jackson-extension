@@ -1,11 +1,14 @@
 package com.lvcoco.jackson.extension;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.github.jsonzou.jmockdata.JMockData;
+import com.lvcoco.jackson.databind.node.LJsonNodeType;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * <pre>
@@ -54,6 +57,14 @@ class JacksonHelperTest {
                 }
                 """;
         System.err.println(JacksonHelper.isJson(s));
+    }
+
+    @Test
+    public void test5() throws Exception {
+        DemoModel demoModel = new DemoModel();
+        JsonNode jsonNode = JacksonHelper.valueToTree(List.of(demoModel));
+        Object value = LJsonNodeType.getValue(jsonNode);
+        System.err.println(value);
     }
 
 }

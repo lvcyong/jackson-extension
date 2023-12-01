@@ -1,7 +1,11 @@
 package com.lvcoco.jackson.databind.node;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <pre>
@@ -19,7 +23,12 @@ public class LArrayNode extends AbstractNode<ArrayNode, Object[]> {
 
     @Override
     public Object[] getValue() {
-        return null;
+        ArrayNode arrayNode = getNode();
+        List<Object> list = new ArrayList<>(arrayNode.size());
+        for (JsonNode jsonNode : arrayNode) {
+            list.add(LJsonNodeType.getValue(jsonNode));
+        }
+        return list.toArray();
     }
 
     @Override
