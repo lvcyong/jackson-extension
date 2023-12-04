@@ -62,7 +62,7 @@ class JacksonHelperTest {
     @Test
     public void test5() throws Exception {
         DemoModel demoModel = new DemoModel();
-        JsonNode jsonNode = JacksonHelper.valueToTree(List.of(demoModel));
+        JsonNode jsonNode = JacksonHelper.valueToTree(demoModel.getBigIntegerArray1());
         Object value = LJsonNodeType.getValue(jsonNode);
         System.err.println(value);
     }

@@ -1,7 +1,10 @@
 package com.lvcoco.jackson.databind.node;
 
+import com.fasterxml.jackson.core.TreeNode;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.*;
+import com.lvcoco.jackson.extension.JacksonHelper;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -108,6 +111,14 @@ public enum LJsonNodeType {
 
     public static AbstractNode<?, ?> getLNode(JsonNode node) {
         return getNodeType(node).getNode(node);
+    }
+
+    public static <T> T getValue(TreeNode treeNode, Class<T> valueType) {
+        return JacksonHelper.treeToValue(treeNode, valueType);
+    }
+
+    public static <T> T getValue(TreeNode treeNode, TypeReference<T> valueTypeRef) {
+        return JacksonHelper.treeToValue(treeNode, valueTypeRef);
     }
 
     public static Object getValue(JsonNode node) {
