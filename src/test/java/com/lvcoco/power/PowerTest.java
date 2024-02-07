@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -18,33 +19,10 @@ import java.util.Scanner;
 public class PowerTest {
 
     public static void main(String[] args) {
-        // 创建一个扫描器对象，用于从控制台读取输入
-        Scanner scanner = new Scanner(System.in);
-        int num;
-
-        // 提示用户输入一个正整数
-        System.err.print("请输入一个正整数：");
-
-        // 读取用户输入的数
-        while ((num = scanner.nextInt()) != -1) {
-            // 调用findPowersOfTwo方法，传入用户输入的数，得到一个包含所有2的指数值的列表
-            List<Integer> powersOfTwo = findPowersOfTwo(num);
-            // 如果列表不为空，说明用户输入的数是由2的指数值相加组成的，打印列表
-            if (!powersOfTwo.isEmpty()) {
-                System.out.println("你给的数是由以下2的指数值相加组成的：" + powersOfTwo);
-            }
-            // 否则，说明用户输入的数不是正整数，打印错误信息
-            else {
-                System.out.println("你输入的数不是正整数，请重新输入。");
-            }
-
-            // 提示用户输入一个正整数
-            System.err.println("请输入一个正整数：");
-        }
-
-        // 关闭扫描器
-        scanner.close();
-
+        int num = new Random().nextInt();
+        String s = findPowersOfTwo(num);
+        System.out.println(num);
+        System.out.println(s);
 
     }
 
@@ -53,7 +31,10 @@ public class PowerTest {
      * @param num 指数和
      * @return 指数值
      */
-    public static List<Integer> findPowersOfTwo(int num) {
+    public static String findPowersOfTwo(int num) {
+        if (num <= 0) {
+            return "None";
+        }
         // 创建一个空的列表，用于存放2的指数值
         List<Integer> powersOfTwo = new ArrayList<>();
         // 如果输入的数是正整数，才进行计算
@@ -73,6 +54,6 @@ public class PowerTest {
             }
         }
         // 返回列表
-        return powersOfTwo;
+        return powersOfTwo.toString();
     }
 }
